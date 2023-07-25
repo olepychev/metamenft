@@ -7,11 +7,11 @@ function getCard() {
   const [pathname, setPathName] = useState(useLocation().pathname);
   return (
     <div className="flex flex-col gap-[12px] w-full max-w-[160px]">
-      {pathname === "/claimcard" ? (
+      {pathname === "/claim-card" ? (
         <></>
       ) : (
         <a
-          href="/claimcard"
+          href="/claim-card"
           className="relative w-full bg-white15 border border-pink60 rounded-[4px] px-[20px] flex justify-end"
         >
           <div className="absolute animate-flipWrap left-[12px] w-[50px] rounded-[4px] h-[69px] bottom-[10px] overflow-hidden">
