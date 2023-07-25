@@ -51,7 +51,7 @@ function Header() {
             </li>
             <li className="relative py-[4px] flex items-center">
               <a
-                className='text-sm font-ceraMedium text-white uppercase hover:text-pink transition-all before:content-[""] before:absolute before:top-full before:w-[0%] before:hover:w-full before:left-[50%] before:translate-x-[-50%] before:h-[1px] before:bg-pink before:transition-all'
+                className='cursor-pointer text-sm font-ceraMedium text-white uppercase hover:text-pink transition-all before:content-[""] before:absolute before:top-full before:w-[0%] before:hover:w-full before:left-[50%] before:translate-x-[-50%] before:h-[1px] before:bg-pink before:transition-all'
                 onClick={handleConnect}
               >
                 {connected ? getShortAddress(walletAddress) : "Connect"}
