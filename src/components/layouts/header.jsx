@@ -27,7 +27,7 @@ function Header() {
   return (
     <div className="fixed left-[50%] translate-x-[-50%] top-0 w-full max-w-[1400px] mx-auto px-[35px] z-[9]">
       <div className="w-full flex items-center justify-between py-[23px]">
-        <a href="/" className="w-full max-w-[40px] flex items-center">
+        <a href="/" className="w-full max-w-[70px] flex items-center">
           <img className="w-full" src={Logo} alt="Logo" />
         </a>
         <nav className="relative flex items-center gap-[45px]">
