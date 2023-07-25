@@ -68,7 +68,7 @@ function ClaimCardForm() {
                   <input
                     type="text"
                     disabled={connected ? false : true}
-                    placeholder="e.g - Mcp6FqTdTqb48uV-eris-PmvV8WqGmfFV"
+                    placeholder="e.g - XXXX:XXXX:XXXX:XXXX"
                     className="w-full px-[16px] py-[20px] text-md text-white outline-none bg-white15 border-b border-b-white transition-all font-ceraLight placeholder-shown:border-b-white35"
                     ref={codeRef}
                   />
