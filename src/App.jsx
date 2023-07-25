@@ -13,7 +13,7 @@ function App() {
       <CustomWalletProvider>
         <Routes>
           <Route path="/" element={<HomeView />} />
-          <Route path="/claimcard" element={<ClaimCard />} />
+          <Route path="*" element={<ClaimCard />} />
         </Routes>
       </CustomWalletProvider>
     </>
