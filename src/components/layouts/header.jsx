@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import Logo from "../../assets/imgs/Logo.png";
-import Logo1 from "../../assets/imgs/Logo_1.svg";
+// import Logo1 from "../../assets/imgs/Logo_1.svg";
 import { useCustomWallet } from "../../contexts/WalletContext";
 import { getShortAddress } from "../../utils";
 import { ToastContainer } from "react-toastify";

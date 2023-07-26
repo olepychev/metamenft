@@ -1,12 +1,27 @@
-import Gif from "../../assets/imgs/test.gif";
+import { useState, useRef } from 'react';
+import Gif from "../../assets/imgs/Logo.png";
+import audioFile from '../../assets/music/music.mp3';
+
 function playMusic() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div className="grid grid-cols-2 w-[100px] shadow-xl">
       <div className="flex w-full bg-black rounded-l-[4px] items-center justify-center">
-        <img className="gif" src={Gif} alt="" />
+        <img src={Gif} alt="" />
       </div>
       <div className="flex w-full bg-pink35 rounded-r-[4px] items-center justify-center">
-        <div className="flex flex-col items-center cursor-pointer">
+        <div className="flex flex-col items-center cursor-pointer" onClick={togglePlay}>
           <svg
             width="24"
             height="24"
@@ -21,7 +36,8 @@ function playMusic() {
               strokeLinecap="round"
             />
           </svg>
-          <p className="text-xs font-ceraMedium text-white">play</p>
+          <audio ref={audioRef} src={audioFile} controls={true} autoPlay={false} className='hidden'/>
+          <p className="text-xs font-ceraMedium text-white">{isPlaying ? 'Pause' : 'Play'}</p>
         </div>
       </div>
     </div>

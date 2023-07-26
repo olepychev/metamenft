@@ -3,8 +3,10 @@ import Header from "../components/layouts/header";
 import PlayMusic from "../components/modals/playMusic";
 import GetCard from "../components/modals/getCard";
 import Video from "../assets/video/HQ.mp4";
-import BushLeftImg from "../assets/imgs/bushLeft.svg";
-import BushRightImg from "../assets/imgs/bushRight.svg";
+// import BushLeftImg from "../assets/imgs/bushLeft.svg";
+// import BushRightImg from "../assets/imgs/bushRight.svg";
+import BushLeftImg from "../assets/imgs/1.png";
+import BushRightImg from "../assets/imgs/2.png";
 
 function HomeView() {
   const containerRef = useRef(null);
