@@ -1,15 +1,28 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useCustomWallet } from "../../contexts/WalletContext";
 import { toast } from "react-toastify";
-import { SOL_RECEIVER, checkCodesAPI, grantRoleAPI } from "../../utils";
+import { SOL_RECEIVER, checkCodesAPI, grantRoleAPI, getUserList } from "../../utils";
 import { sendSol } from "../../utils/web3";
 import Video from "../../assets/video/eris-pack.mp4";
+import Select from 'react-select';
 
 function ClaimCardForm() {
   const { connected, endpoint, wallet, walletAddress } = useCustomWallet();
   const codeRef = useRef();
   const discordRef = useRef();
   const [ isSuccess, setIsSuccess ] = useState(false);
+  const [ userList, setUserList ] = useState([{ value: 'saxophonist_2023', label: 'saxophonist_2023' }]);
+  const [ selectedUser, setSelectedUser ] = useState("");
+
+  useEffect(() => {
+    setUserList([
+      { value: 'saxophonist_2023', label: 'saxophonist_2023' },
+        { value: 'swervu', label: 'swervu', color: '#0052CC'},
+        { value: 'pingpong4768', label: 'pingpong4768'},
+        { value: 'deanbacademy', label: 'deanbacademy'},
+    ]);
+
+  }, [])
 
   const handleSubmit = async () => {
     // if(!connected) return;
@@ -19,13 +32,13 @@ function ClaimCardForm() {
       codeRef.current.focus();
       return;
     }
-    else if(discordRef.current.value == "") {
+    else if(selectedUser == "") {
       toast.error("Please input the discord name correctly.");
-      discordRef.current.focus();
+      // discordRef.current.focus();
       return;
     }
     const _code = codeRef.current.value;
-    const _discordName = discordRef.current.value;
+    const _discordName = selectedUser;
     const checkRes = await checkCodesAPI(_code, _discordName);
     if(checkRes.success) {
       toast.success(checkRes.data);
@@ -48,6 +61,14 @@ function ClaimCardForm() {
     }
   }
 
+  const getUser = async () => {
+    const res = await getUserList();
+    if(res.success) {
+      setUserList(res.data)
+    } else {
+      toast.error(res.data)
+    }
+  }
   return (
     <div className="w-full h-full absolute top-0 left-0 bg-black75 backdrop-blur-[60px]">
       <div className="w-full h-full flex items-center">
@@ -85,7 +106,7 @@ function ClaimCardForm() {
                         type="text"
                         // disabled={connected ? false : true}
                         placeholder="e.g - XXXXX:XXXXX:XXXXX:XXXXX"
-                        className="w-full px-[16px] py-[20px] text-md text-white outline-none bg-white15 border-b border-b-white transition-all font-ceraLight placeholder-shown:border-b-white35"
+                        className="w-full px-[16px] py-[8px] text-md outline-none bg-white border-b border-b-white transition-all font-ceraLight placeholder-shown:border-b-white35 rounded-[4px]"
                         ref={codeRef}
                         required
                       />
@@ -99,13 +120,31 @@ function ClaimCardForm() {
                       >
                         Enter Your Discord
                       </label>
-                      <input
+                      {/* <input
                         type="text"
                         // disabled={connected ? false : true}
                         placeholder="e.g. adam.sol#5494"
                         className="w-full px-[16px] py-[20px] text-md text-white outline-none bg-white15 border-b border-b-white transition-all font-ceraLight placeholder-shown:border-b-white35"
                         ref={discordRef}
-                      />
+                      /> */}
+
+                      <div className="flex flex-wrap gap-[20px]">
+                        <Select
+                          className="basic-single flex-1"
+                          classNamePrefix="select"
+                          // defaultValue={userList[0]}
+                          isDisabled={false}
+                          isLoading={false}
+                          isClearable={true}
+                          isRtl={false}
+                          isSearchable={true}
+                          options={userList}
+                          onChange={(e) => setSelectedUser(e.value)}
+                          // ref={discordRef}
+                        />
+
+                        <input type="button" className="px-[16px] bg-white hover:text-pink rounded-[25px] group flex items-center justify-center text-md font-ceraMedium text-black transition-all" value="ConnectList" onClick={getUser}/>
+                      </div>
                     </div>
                   </div>
                   {/* {!connected ? (
