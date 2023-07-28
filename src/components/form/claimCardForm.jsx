@@ -11,18 +11,12 @@ function ClaimCardForm() {
   const codeRef = useRef();
   const discordRef = useRef();
   const [ isSuccess, setIsSuccess ] = useState(false);
-  const [ userList, setUserList ] = useState([{ value: 'saxophonist_2023', label: 'saxophonist_2023' }]);
+  const [ userList, setUserList ] = useState([]);
   const [ selectedUser, setSelectedUser ] = useState("");
 
-  useEffect(() => {
-    setUserList([
-      { value: 'saxophonist_2023', label: 'saxophonist_2023' },
-        { value: 'swervu', label: 'swervu', color: '#0052CC'},
-        { value: 'pingpong4768', label: 'pingpong4768'},
-        { value: 'deanbacademy', label: 'deanbacademy'},
-    ]);
-
-  }, [])
+  // useEffect(async () => {
+  //   await getUser();
+  // }, [])
 
   const handleSubmit = async () => {
     // if(!connected) return;
