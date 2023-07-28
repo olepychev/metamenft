@@ -49,14 +49,14 @@ function Header() {
                 team
               </a>
             </li>
-            <li className="relative py-[4px] flex items-center">
+            {/* <li className="relative py-[4px] flex items-center">
               <a
                 className='cursor-pointer text-sm font-ceraMedium text-white uppercase hover:text-pink transition-all before:content-[""] before:absolute before:top-full before:w-[0%] before:hover:w-full before:left-[50%] before:translate-x-[-50%] before:h-[1px] before:bg-pink before:transition-all'
                 onClick={handleConnect}
               >
                 {connected ? getShortAddress(walletAddress) : "Connect"}
               </a>
-            </li>
+            </li> */}
           </ul>
           <button className="btn-animation flex items-center gap-[12px] py-[12px] px-[22px] bg-white15  group transition-all">
             <span> </span>

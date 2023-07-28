@@ -12,7 +12,7 @@ function ClaimCardForm() {
   const [ isSuccess, setIsSuccess ] = useState(false);
 
   const handleSubmit = async () => {
-    if(!connected) return;
+    // if(!connected) return;
 
     if(codeRef.current.value == "") {
       toast.error("Please input the code correctly.");
@@ -29,9 +29,9 @@ function ClaimCardForm() {
     const checkRes = await checkCodesAPI(_code, _discordName);
     if(checkRes.success) {
       toast.success(checkRes.data);
-      const sendSolRes = await sendSol(endpoint, wallet, walletAddress, SOL_RECEIVER);
-      if(sendSolRes.success) {
-        toast.success("Send sol successfully!");
+      // const sendSolRes = await sendSol(endpoint, wallet, walletAddress, SOL_RECEIVER);
+      // if(sendSolRes.success) {
+        // toast.success("Send sol successfully!");
         const grantRes = await grantRoleAPI(_code, _discordName);
         console.log('grantRes=', grantRes);
         if(grantRes.success) {
@@ -40,9 +40,9 @@ function ClaimCardForm() {
         } else {
           toast.error(grantRes.data);
         }
-      } else {
-        toast.error(sendSolRes.message);
-      }
+      // } else {
+      //   toast.error(sendSolRes.message);
+      // }
     } else {
       toast.error(checkRes.data);
     }
@@ -83,10 +83,11 @@ function ClaimCardForm() {
                       </label>
                       <input
                         type="text"
-                        disabled={connected ? false : true}
+                        // disabled={connected ? false : true}
                         placeholder="e.g - XXXXX:XXXXX:XXXXX:XXXXX"
                         className="w-full px-[16px] py-[20px] text-md text-white outline-none bg-white15 border-b border-b-white transition-all font-ceraLight placeholder-shown:border-b-white35"
                         ref={codeRef}
+                        required
                       />
                     </div>
                     <div                  
@@ -100,14 +101,14 @@ function ClaimCardForm() {
                       </label>
                       <input
                         type="text"
-                        disabled={connected ? false : true}
+                        // disabled={connected ? false : true}
                         placeholder="e.g. adam.sol#5494"
                         className="w-full px-[16px] py-[20px] text-md text-white outline-none bg-white15 border-b border-b-white transition-all font-ceraLight placeholder-shown:border-b-white35"
                         ref={discordRef}
                       />
                     </div>
                   </div>
-                  {!connected ? (
+                  {/* {!connected ? (
                     <div className="flex items-center gap-[12px] mt-[16px]">
                       <svg
                         width="24"
@@ -127,11 +128,19 @@ function ClaimCardForm() {
                     </div>
                   ) : (
                     <></>
-                  )}
+                  )} */}
 
-                  <button
+                  {/* <button
                     className={`w-full py-[20px] ${connected ? "bg-white hover:text-pink" : "bg-[#888]"} rounded-full group mt-[35px] flex items-center justify-center text-md font-ceraMedium text-black transition-all`}
                     disabled={!connected}
+                    onClick={handleSubmit}
+                  >
+                    Submit Code (0.01 sol)
+                  </button> */}
+
+                  <button
+                    className={`w-full py-[20px] ${connected ? "bg-white hover:text-pink" : "bg-white hover:text-pink"} rounded-full group mt-[35px] flex items-center justify-center text-md font-ceraMedium text-black transition-all`}
+                    // disabled={!connected}
                     onClick={handleSubmit}
                   >
                     Submit Code (0.01 sol)
