@@ -14,10 +14,6 @@ function ClaimCardForm() {
   const [ userList, setUserList ] = useState([]);
   const [ selectedUser, setSelectedUser ] = useState("");
 
-  // useEffect(async () => {
-  //   await getUser();
-  // }, [])
-
   const handleSubmit = async () => {
     // if(!connected) return;
 
@@ -28,7 +24,6 @@ function ClaimCardForm() {
     }
     else if(selectedUser == "") {
       toast.error("Please input the discord name correctly.");
-      // discordRef.current.focus();
       return;
     }
     const _code = codeRef.current.value;
@@ -58,9 +53,10 @@ function ClaimCardForm() {
   const getUser = async () => {
     const res = await getUserList();
     if(res.success) {
-      console.log('@@@@@@@@', res.data)
-      console.log('!!!!!!!!!', res.data[1])
-      setUserList(res.data)
+      const options = res.data.map((item) => {
+        return { value: item, label: item }
+      })
+      setUserList(options)
     } else {
       toast.error(res.data)
     }
