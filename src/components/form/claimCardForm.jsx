@@ -70,6 +70,8 @@ function ClaimCardForm() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'discord'
     })
+
+    console.log('@@@@@@@@', data)
   }
 
   async function signout() {
