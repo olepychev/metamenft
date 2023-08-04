@@ -8,12 +8,31 @@ import Video from "../assets/video/HQ.mp4";
 import BushLeftImg from "../assets/imgs/1.png";
 import BushRightImg from "../assets/imgs/2.png";
 
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient('https://eiovaesprrteptfjicbz.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpb3ZhZXNwcnJ0ZXB0ZmppY2J6Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MTEyMzM3NiwiZXhwIjoyMDA2Njk5Mzc2fQ.9B2cOC56cIEz8kVLvYRpZ94dxtHZrWK7_m5L4XyHifQ')
+
 function HomeView() {
   const containerRef = useRef(null);
   const leftImageRef = useRef(null);
   const rightImageRef = useRef(null);
   const scrollDownPointer = useRef(null);
   const videoRef = useRef(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const { user, error } = await supabase.auth.api.getUser();
+      if (error) {
+        console.error(error);
+      } else {
+        console.log('!!!!!!!!!!!!', user); // This will log the user data to the console
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.pageYOffset;
