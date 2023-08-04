@@ -71,24 +71,24 @@ function ClaimCardForm() {
       provider: 'discord'
     });
 
-    const authWindow = window.open(data.url, '_blank');
+    // const authWindow = window.open(data.url, '_blank');
 
     // Poll for authentication result in the original window
-    const intervalId = setInterval(async () => {
-      const { session } = await supabase.auth.getSession();
+    // const intervalId = setInterval(async () => {
+    //   const { session } = await supabase.auth.getSession();
 
-      if (session) {
-        clearInterval(intervalId);
+    //   if (session) {
+    //     clearInterval(intervalId);
 
-        // Authentication successful, close the new window if it's still open
-        if (authWindow && !authWindow.closed) {
-          authWindow.close();
-        }
+    //     // Authentication successful, close the new window if it's still open
+    //     if (authWindow && !authWindow.closed) {
+    //       authWindow.close();
+    //     }
 
-        // Handle the authenticated session in the original window
-        // TODO: Add your logic here
-      }
-    }, 1000);
+    //     // Handle the authenticated session in the original window
+    //     // TODO: Add your logic here
+    //   }
+    // }, 1000);
   }
 
   async function signout() {
