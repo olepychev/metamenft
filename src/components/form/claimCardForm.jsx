@@ -8,7 +8,7 @@ import Select from 'react-select';
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient('https://eiovaesprrteptfjicbz.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYm55YmxtYnJscHZiYXd0YWpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTExMjY4MDQsImV4cCI6MjAwNjcwMjgwNH0.lNmoTe9uhCCRqd4W3KFHopO2Tx8XX3rCU9_OqRPhMN8')
+const supabase = createClient('https://eiovaesprrteptfjicbz.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpb3ZhZXNwcnJ0ZXB0ZmppY2J6Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MTEyMzM3NiwiZXhwIjoyMDA2Njk5Mzc2fQ.9B2cOC56cIEz8kVLvYRpZ94dxtHZrWK7_m5L4XyHifQ')
 
 function ClaimCardForm() {
   const { connected, endpoint, wallet, walletAddress } = useCustomWallet();
