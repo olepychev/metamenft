@@ -67,11 +67,18 @@ function ClaimCardForm() {
   }
 
   async function signInWithDiscord() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'discord'
-    })
+    const discordSignInWindow = window.open('https://discord.com/oauth2/authorize?client_id=1133147665635487908&redirect_uri=https%3A%2F%2Feiovaesprrteptfjicbz.supabase.co%2Fauth%2Fv1%2Fcallback&response_type=code&scope=email+identify&state=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTExMzAxMTIsInNpdGVfdXJsIjoiaHR0cHM6Ly9tZXRhbWVuZnQudmVyY2VsLmFwcCIsImlkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIiwiZnVuY3Rpb25faG9va3MiOm51bGwsInByb3ZpZGVyIjoiZGlzY29yZCIsInJlZmVycmVyIjoiaHR0cHM6Ly9tZXRhbWVuZnQudmVyY2VsLmFwcC8iLCJmbG93X3N0YXRlX2lkIjoiIn0.P8jpDR8n5wWCXuKyYG3A4isp_157sA-OsHK6M5xxnS4', '_blank', 'width=500,height=600');
 
-    console.log('@@@@@@@@', data)
+    
+    // try {
+    //   const { data, error } = await supabase.auth.signInWithOAuth({
+    //     provider: 'discord'
+    //   })
+    // } catch (error) {
+
+    // } finally {
+    //   discordSignInWindow.close();
+    // }
   }
 
   async function signout() {
