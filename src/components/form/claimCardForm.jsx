@@ -58,6 +58,8 @@ function ClaimCardForm() {
   const getUser = async () => {
     const res = await getUserList();
     if(res.success) {
+      console.log('@@@@@@@@', res.data)
+      console.log('!!!!!!!!!', res.data[1])
       setUserList(res.data)
     } else {
       toast.error(res.data)
