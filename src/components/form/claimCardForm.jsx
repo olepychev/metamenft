@@ -6,6 +6,10 @@ import { sendSol } from "../../utils/web3";
 import Video from "../../assets/video/eris-pack.mp4";
 import Select from 'react-select';
 
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient('https://eiovaesprrteptfjicbz.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYm55YmxtYnJscHZiYXd0YWpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTExMjY4MDQsImV4cCI6MjAwNjcwMjgwNH0.lNmoTe9uhCCRqd4W3KFHopO2Tx8XX3rCU9_OqRPhMN8')
+
 function ClaimCardForm() {
   const { connected, endpoint, wallet, walletAddress } = useCustomWallet();
   const codeRef = useRef();
@@ -61,6 +65,17 @@ function ClaimCardForm() {
       toast.error(res.data)
     }
   }
+
+  async function signInWithDiscord() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'discord'
+    })
+  }
+
+  async function signout() {
+    const { error } = await supabase.auth.signOut()
+  }
+
   return (
     <div className="w-full h-full absolute top-0 left-0 bg-black75 backdrop-blur-[60px]">
       <div className="w-full h-full flex items-center">
@@ -135,7 +150,7 @@ function ClaimCardForm() {
                           // ref={discordRef}
                         />
 
-                        <input type="button" className="px-[16px] bg-white hover:text-pink rounded-[25px] group flex items-center justify-center text-md font-ceraMedium text-black transition-all" value="ConnectList" onClick={getUser}/>
+                        <input type="button" className="px-[16px] bg-white hover:text-pink rounded-[25px] group flex items-center justify-center text-md font-ceraMedium text-black transition-all" value="ConnectList" onClick={signInWithDiscord}/>
                       </div>
                     </div>
                   </div>

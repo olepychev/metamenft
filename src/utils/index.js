@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export const SOL_RECEIVER = "9dcZQMj85NXL7iSKNF9zwtUSnL85CYhzG4vp3B1G4yjB";
-// export const API_PATH = "https://localhost:5173/api";
+export const API_PATH = "/api";
 // export const API_PATH = "https://metamenft-backend.vercel.app/api";
-export const API_PATH = "http://146.71.78.231:3307/api";
+// export const API_PATH = "http://146.71.78.231:3307/api";
 
 export const checkCodesAPI = async (_code, _discordName) => {
     try {
