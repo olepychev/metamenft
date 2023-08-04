@@ -32,5 +32,13 @@ export default defineConfig({
       // Whether to polyfill `node:` protocol imports.
       protocolImports: true,
     }),
-  ]
+  ],
+  // server: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://172.93.193.199:3307/api', // Your API endpoint
+  //       changeOrigin: true,
+  //     },
+  //   },
+  // }
 })
