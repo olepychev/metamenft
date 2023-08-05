@@ -29,6 +29,7 @@ function ClaimCardForm() {
           setUserList([{label:userData.email, value: userData.email}, ...userList])
         }
         console.log(userData);
+        window.history.pushState({}, "", '/discord-login-callback');
       }
       getUser()
     }
