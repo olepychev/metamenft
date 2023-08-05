@@ -6,16 +6,19 @@ import { sendSol } from "../../utils/web3";
 import Video from "../../assets/video/eris-pack.mp4";
 import Select from 'react-select';
 
-import { createClient } from '@supabase/supabase-js'
+const clientId = "1133147665635487908";
+const redirectUri = "http://127.0.0.1:5173/claim-card";
 
-const supabase = createClient('https://eiovaesprrteptfjicbz.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpb3ZhZXNwcnJ0ZXB0ZmppY2J6Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MTEyMzM3NiwiZXhwIjoyMDA2Njk5Mzc2fQ.9B2cOC56cIEz8kVLvYRpZ94dxtHZrWK7_m5L4XyHifQ')
+const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
+  redirectUri
+)}&response_type=token&scope=email`;
 
 function ClaimCardForm() {
   const { connected, endpoint, wallet, walletAddress } = useCustomWallet();
   const codeRef = useRef();
   const discordRef = useRef();
   const [ isSuccess, setIsSuccess ] = useState(false);
-  const [ userList, setUserList ] = useState([]);
+  // const [ userList, setUserList ] = useState([]);
   const [ selectedUser, setSelectedUser ] = useState("");
   const [ accessToken, setAccessToken ] = useState("");
 
@@ -26,10 +29,11 @@ function ClaimCardForm() {
       async function getUser() {
         const userData = await getDiscordUser(token)
         if(userData?.email) {
-          setUserList([{label:userData.email, value: userData.email}, ...userList])
+          setSelectedUser(userData.username)
+          // setUserList([{label:userData.email, value: userData.email}, ...userList])
         }
         console.log(userData);
-        window.history.pushState({}, "", '/discord-login-callback');
+        window.history.pushState({}, "", '/claim-card');
       }
       getUser()
     }
@@ -37,14 +41,14 @@ function ClaimCardForm() {
 
   const handleSubmit = async () => {
     // if(!connected) return;
-
-    if(codeRef.current.value == "") {
-      toast.error("Please input the code correctly.");
-      codeRef.current.focus();
+    
+    if(selectedUser == "") {
+      toast.error("Please Login with discord.");
       return;
     }
-    else if(selectedUser == "") {
-      toast.error("Please input the discord name correctly.");
+    else if(codeRef.current.value == "") {
+      toast.error("Please input the code correctly.");
+      codeRef.current.focus();
       return;
     }
     const _code = codeRef.current.value;
@@ -83,42 +87,6 @@ function ClaimCardForm() {
     }
   }
 
-  async function signInWithDiscord() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'discord'
-    });
-
-    // const authWindow = window.open(data.url, '_blank');
-
-    // Poll for authentication result in the original window
-    // const intervalId = setInterval(async () => {
-    //   const { session } = await supabase.auth.getSession();
-
-    //   if (session) {
-    //     clearInterval(intervalId);
-
-    //     // Authentication successful, close the new window if it's still open
-    //     if (authWindow && !authWindow.closed) {
-    //       authWindow.close();
-    //     }
-
-    //     // Handle the authenticated session in the original window
-    //     // TODO: Add your logic here
-    //   }
-    // }, 1000);
-  }
-
-  async function signout() {
-    const { error } = await supabase.auth.signOut()
-  }
-
-  const clientId = "1133147665635487908";
-  const redirectUri = "http://127.0.0.1:5173/claim-card";
-
-  const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
-    redirectUri
-  )}&response_type=token&scope=email`;
-
   const handleLogin = () => {
     window.location.href = discordAuthUrl;
   };
@@ -147,6 +115,32 @@ function ClaimCardForm() {
                 <div className="w-full h-full">
                 {/* <form className="w-full h-full"> */}
                   <div className="flex flex-col gap-[40px]">
+                  <div                  
+                      className="w-full flex flex-col gap-[10px]"
+                    >
+                      <label
+                        htmlFor="discord"
+                        className="text-lg text-white font-ceraMedium"
+                      >
+                        Connect Your Discord
+                      </label>
+                      {/* <input
+                        type="text"
+                        // disabled={connected ? false : true}
+                        placeholder="e.g. adam.sol#5494"
+                        className="w-full px-[16px] py-[20px] text-md text-white outline-none bg-white15 border-b border-b-white transition-all font-ceraLight placeholder-shown:border-b-white35"
+                        ref={discordRef}
+                      /> */}
+
+                      <div className="flex flex-wrap gap-[20px]">
+                        <button 
+                          type="button" 
+                          className="px-[16px] bg-white hover:text-pink rounded-[25px] group flex items-center justify-center text-md font-ceraMedium text-black transition-all w-full h-[40px]" 
+                          onClick={handleLogin}
+                        >{selectedUser == "" ? "Login with Discord" : selectedUser}</button>
+                      </div>
+                    </div>
+
                     <div
                       className="w-full flex flex-col gap-[10px]"
                     >
@@ -160,51 +154,10 @@ function ClaimCardForm() {
                         type="text"
                         disabled={accessToken ? false : true}
                         placeholder="e.g - XXXXX:XXXXX:XXXXX:XXXXX"
-                        className="w-full px-[16px] py-[8px] text-md outline-none bg-white border-b border-b-white transition-all font-ceraLight placeholder-shown:border-b-white35 rounded-[4px]"
+                        className="w-full px-[16px] py-[8px] text-md outline-none bg-white border-b border-b-white transition-all font-ceraLight placeholder-shown:border-b-white35 rounded-[4px] disabled:bg-black"
                         ref={codeRef}
                         required
                       />
-                    </div>
-                    <div                  
-                      className="w-full flex flex-col gap-[10px]"
-                    >
-                      <label
-                        htmlFor="discord"
-                        className="text-lg text-white font-ceraMedium"
-                      >
-                        Enter Your Discord
-                      </label>
-                      {/* <input
-                        type="text"
-                        // disabled={connected ? false : true}
-                        placeholder="e.g. adam.sol#5494"
-                        className="w-full px-[16px] py-[20px] text-md text-white outline-none bg-white15 border-b border-b-white transition-all font-ceraLight placeholder-shown:border-b-white35"
-                        ref={discordRef}
-                      /> */}
-
-                      <div className="flex flex-wrap gap-[20px]">
-                        <Select
-                          className="basic-single flex-1"
-                          classNamePrefix="select"
-                          // defaultValue={userList[0]}
-                          value={userList?.[0]}
-                          isDisabled={false}
-                          isLoading={false}
-                          isClearable={true}
-                          isRtl={false}
-                          isSearchable={true}
-                          options={userList}
-                          onChange={(e) => setSelectedUser(e.value)}
-                          // ref={discordRef}
-                        />
-
-                        <button 
-                          type="button" 
-                          className="px-[16px] bg-white hover:text-pink rounded-[25px] group flex items-center justify-center text-md font-ceraMedium text-black transition-all" 
-                          value="ConnectList" 
-                          onClick={handleLogin}
-                        >Discord</button>
-                      </div>
                     </div>
                   </div>
                   {/* {!connected ? (
