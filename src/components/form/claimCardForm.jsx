@@ -76,20 +76,9 @@ function ClaimCardForm() {
     }
   }
 
-  const getUser = async () => {
-    const res = await getUserList();
-    if(res.success) {
-      const options = res.data.map((item) => {
-        return { value: item, label: item }
-      })
-      setUserList(options)
-    } else {
-      toast.error(res.data)
-    }
-  }
-
   const handleLogin = () => {
-    window.location.href = discordAuthUrl;
+    if(selectedUser == "")
+      window.location.href = discordAuthUrl;
   };
 
   return (
