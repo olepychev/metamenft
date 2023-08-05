@@ -77,8 +77,7 @@ function ClaimCardForm() {
   }
 
   const handleLogin = () => {
-    if(selectedUser == "")
-      window.location.href = discordAuthUrl;
+    window.location.href = discordAuthUrl;
   };
 
   return (
