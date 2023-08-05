@@ -44,6 +44,20 @@ export const getUserList = async () => {
     }
 }
 
+export const getDiscordUser = async (token) => {
+    try {
+        const res = await axios.get(`https://discordapp.com/api/users/@me`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        return res.data;
+    } catch(err) {
+        console.log("Discord Login, err=", err);
+        return false
+    }
+}
+
 export const getShortAddress = (address, length = 4) => {
     return address && [address.substr(0, length), address.substr(address.length - length, length)].join("...");
 }

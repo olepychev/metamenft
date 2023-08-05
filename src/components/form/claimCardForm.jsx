@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useCustomWallet } from "../../contexts/WalletContext";
 import { toast } from "react-toastify";
-import { SOL_RECEIVER, checkCodesAPI, grantRoleAPI, getUserList } from "../../utils";
+import { SOL_RECEIVER, checkCodesAPI, grantRoleAPI, getUserList, getDiscordUser } from "../../utils";
 import { sendSol } from "../../utils/web3";
 import Video from "../../assets/video/eris-pack.mp4";
 import Select from 'react-select';
@@ -17,6 +17,22 @@ function ClaimCardForm() {
   const [ isSuccess, setIsSuccess ] = useState(false);
   const [ userList, setUserList ] = useState([]);
   const [ selectedUser, setSelectedUser ] = useState("");
+  const [ accessToken, setAccessToken ] = useState("");
+
+  useEffect(() => {
+    const token = window.location.hash.match(/access_token=([^&]+)/)?.[1] || ""
+    if(token && !accessToken) {
+      setAccessToken(token)
+      async function getUser() {
+        const userData = await getDiscordUser(token)
+        if(userData?.email) {
+          setUserList([{label:userData.email, value: userData.email}, ...userList])
+        }
+        console.log(userData);
+      }
+      getUser()
+    }
+  }, [])
 
   const handleSubmit = async () => {
     // if(!connected) return;
@@ -95,6 +111,17 @@ function ClaimCardForm() {
     const { error } = await supabase.auth.signOut()
   }
 
+  const clientId = "1133147665635487908";
+  const redirectUri = "http://127.0.0.1:5173/claim-card";
+
+  const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
+    redirectUri
+  )}&response_type=token&scope=email`;
+
+  const handleLogin = () => {
+    window.location.href = discordAuthUrl;
+  };
+
   return (
     <div className="w-full h-full absolute top-0 left-0 bg-black75 backdrop-blur-[60px]">
       <div className="w-full h-full flex items-center">
@@ -130,7 +157,7 @@ function ClaimCardForm() {
                       </label>
                       <input
                         type="text"
-                        // disabled={connected ? false : true}
+                        disabled={accessToken ? false : true}
                         placeholder="e.g - XXXXX:XXXXX:XXXXX:XXXXX"
                         className="w-full px-[16px] py-[8px] text-md outline-none bg-white border-b border-b-white transition-all font-ceraLight placeholder-shown:border-b-white35 rounded-[4px]"
                         ref={codeRef}
@@ -159,6 +186,7 @@ function ClaimCardForm() {
                           className="basic-single flex-1"
                           classNamePrefix="select"
                           // defaultValue={userList[0]}
+                          value={userList?.[0]}
                           isDisabled={false}
                           isLoading={false}
                           isClearable={true}
@@ -169,7 +197,12 @@ function ClaimCardForm() {
                           // ref={discordRef}
                         />
 
-                        <input type="button" className="px-[16px] bg-white hover:text-pink rounded-[25px] group flex items-center justify-center text-md font-ceraMedium text-black transition-all" value="ConnectList" onClick={signInWithDiscord}/>
+                        <button 
+                          type="button" 
+                          className="px-[16px] bg-white hover:text-pink rounded-[25px] group flex items-center justify-center text-md font-ceraMedium text-black transition-all" 
+                          value="ConnectList" 
+                          onClick={handleLogin}
+                        >Discord</button>
                       </div>
                     </div>
                   </div>

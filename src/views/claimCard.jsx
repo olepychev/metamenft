@@ -6,15 +6,6 @@ import { useEffect } from "react";
 
 function ClaimCard() {
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // You can await here
-  //     const response = await fetch('/api/test');
-  //     console.log('@@@@@@@@@@@@', response)
-  //   }
-  //   fetchData();
-  // }, [])
-
   return (
     <div className="relative w-full h-screen bg-heroIMG bg-no-repeat bg-center bg-cover">
       <Header />
