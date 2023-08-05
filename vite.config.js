@@ -4,6 +4,9 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    host: '172.93.193.199', // Replace with your desired IP address
+  },
   esbuild: {
     // minify: false,
     // minifySyntax: false
