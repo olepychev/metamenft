@@ -7,7 +7,8 @@ import Video from "../../assets/video/eris-pack.mp4";
 import Select from 'react-select';
 
 const clientId = "1133147665635487908";
-const redirectUri = "http://127.0.0.1:5173/claim-card";
+// const redirectUri = "http://127.0.0.1:5173/claim-card";
+const redirectUri = "https://metamenft.vercel.app/claim-card";
 
 const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
   redirectUri
