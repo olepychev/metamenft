@@ -185,7 +185,7 @@ function ClaimCardForm() {
                     // disabled={!connected}
                     onClick={handleSubmit}
                   >
-                    Submit Code (0.01 sol)
+                    Submit Code
                   </button>
                 {/* </form> */}
                 </div>
